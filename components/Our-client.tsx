@@ -5,12 +5,15 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const clients = [
   { id: 1, name: "Silversheen", logo: "/silversheen.png" },
-  { id: 2, name: "Eijc", logo: "/eijc.png" },
-  { id: 4, name: "Fulwari", logo: "/FULWARI.png" },
+  { id: 2, name: "Eijc", logo: "/eijc.png", size: 'h-17' },
+  { id: 3, name: "FFDL", logo: "/FFDL.png", size: 'h-26' },
+  { id: 4, name: "Fulwari", logo: "/FULWARI.png" , size: 'h-16'},
   { id: 5, name: "Meauraa", logo: "/meauraa.png" },
-  { id: 6, name: "TATTVAM", logo: "/TATTVAM.png" },
+  { id: 6, name: "TATTVAM", logo: "/TATTVAM.png" , size: 'h-20'},
   { id: 7, name: "House Of Ceramics", logo: "/house-of-ceramics.png" },
   { id: 8, name: "Rama Art", logo: "/rama-art.png" },
+  { id: 9, name: "Easy Academics", logo: "/Easy-Academics.png", size: 'h-20' },
+  { id: 10, name: "Kalp Naturo", logo: "/Kalp-Naturo.png" , size: 'h-30'},
 ];
 
 
@@ -18,16 +21,16 @@ const clients = [
 export default function ClientLogoCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
-  
+
 
   const slidesToShow = {
     mobile: 1,
     tablet: 2,
     desktop: 4
   };
-  
+
   const [itemsPerSlide, setItemsPerSlide] = useState(slidesToShow.desktop);
-  
+
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,40 +42,40 @@ export default function ClientLogoCarousel() {
         setItemsPerSlide(slidesToShow.desktop);
       }
     };
-    
+
     handleResize();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
   }, []);
-  
+
   const totalSlides = Math.ceil(clients.length / itemsPerSlide);
-  
+
 
   useEffect(() => {
     if (!isAutoPlaying) return;
-    
+
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % totalSlides);
-    }, 4000);
-    
+    }, 1000);
+
     return () => clearInterval(interval);
   }, [isAutoPlaying, totalSlides]);
-  
+
   const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % totalSlides);
     setIsAutoPlaying(false);
   };
-  
+
   const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + totalSlides) % totalSlides);
     setIsAutoPlaying(false);
   };
-  
+
   const goToSlide = (index) => {
     setCurrentIndex(index);
     setIsAutoPlaying(false);
   };
-  
+
   return (
     <section className="py-24 bg-card/50">
       <div className="container mx-auto px-4">
@@ -88,10 +91,10 @@ export default function ClientLogoCarousel() {
             Partnering with leading brands to deliver exceptional digital experiences
           </p>
         </div>
-        
-       
+
+
         <div className="relative max-w-7xl mx-auto px-16">
-          
+
           <button
             onClick={prevSlide}
             className="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border border-border hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:shadow-lg"
@@ -99,7 +102,7 @@ export default function ClientLogoCarousel() {
           >
             <ChevronLeft className="w-6 h-6 text-muted-foreground" />
           </button>
-          
+
           <button
             onClick={nextSlide}
             className="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-background border border-border hover:border-primary/50 flex items-center justify-center transition-all duration-300 hover:shadow-lg"
@@ -107,8 +110,8 @@ export default function ClientLogoCarousel() {
           >
             <ChevronRight className="w-6 h-6 text-muted-foreground" />
           </button>
-          
-          
+
+
           <div className="overflow-hidden rounded-xl">
             <div
               className="flex transition-transform duration-500 ease-in-out"
@@ -129,14 +132,19 @@ export default function ClientLogoCarousel() {
                       return (
                         <div
                           key={client.id}
-                          className="group p-6 rounded-xl bg-background border-2 border-purple-600 hover:border-purple-500 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/20 flex items-center justify-center min-h-[140px]"
+                          className="group p-6 rounded-xl border-2 transition-all duration-300 flex items-center justify-center min-h-[140px]
+             bg-[#660f7a] border-[#660f7a]
+             hover:bg-[#660f7a] hover:border-[#660f7a]
+             hover:shadow-lg hover:shadow-[#660f7a]/40"
                         >
+
+
                           <div className="flex flex-col items-center justify-center gap-3">
-                            <div className="w-full h-14 flex items-center justify-center">
+                            <div className="w-full h-20 flex items-center justify-center">
                               <img
                                 src={client.logo}
                                 alt={client.name}
-                                className="max-w-full max-h-full object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300"
+                                className={`max-w-full object-contain opacity-60 group-hover:opacity-100 transition-opacity duration-300 ${client.size || 'max-h-14'}`}
                               />
                             </div>
                             <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
@@ -150,8 +158,8 @@ export default function ClientLogoCarousel() {
               ))}
             </div>
           </div>
-          
-          
+
+
           <div className="flex justify-center gap-2 mt-8">
             {Array.from({ length: totalSlides }).map((_, index) => (
               <button
@@ -160,17 +168,16 @@ export default function ClientLogoCarousel() {
                 aria-label={`Go to slide ${index + 1}`}
               >
                 <div
-                  className={`h-2 rounded-full transition-all duration-300 ${
-                    currentIndex === index
-                      ? 'w-8 bg-primary'
-                      : 'w-2 bg-muted-foreground/30 hover:bg-primary/50'
-                  }`}
+                  className={`h-2 rounded-full transition-all duration-300 ${currentIndex === index
+                    ? 'w-8 bg-primary'
+                    : 'w-2 bg-muted-foreground/30 hover:bg-primary/50'
+                    }`}
                 />
               </button>
             ))}
           </div>
         </div>
       </div>
-    </section>
+    </section >
   );
 }

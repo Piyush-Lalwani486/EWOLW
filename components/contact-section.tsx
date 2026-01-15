@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
-import { Send, Mail, Linkedin, Twitter, InstagramIcon, FacebookIcon } from "lucide-react"
+import { Send, Mail, Linkedin, InstagramIcon, FacebookIcon } from "lucide-react"
 
 export function ContactSection() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -16,11 +16,17 @@ export function ContactSection() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsSubmitting(true)
-    // Simulate form submission
+
     await new Promise((resolve) => setTimeout(resolve, 1000))
+
     setIsSubmitting(false)
     setSubmitted(true)
+
+    
+    window.location.href =
+      "mailto:ewolwdigital@gmail.com?subject=Consultation Request"
   }
+
 
   return (
     <section id="contact" className="py-24 bg-card/50">
@@ -61,7 +67,7 @@ export function ContactSection() {
                 {[
                   {
                     icon: Linkedin,
-                    href: "https://www.linkedin.com/company/ewolw-digital/", // Standard public link
+                    href: "https://www.linkedin.com/company/ewolw-digital/", 
                     label: "LinkedIn"
                   },
                   {
@@ -78,8 +84,8 @@ export function ContactSection() {
                   <a
                     key={social.label}
                     href={social.href}
-                    target="_blank" // Opens in a new tab
-                    rel="noopener noreferrer" // Security best practice
+                    target="_blank" 
+                    rel="noopener noreferrer" 
                     className="w-10 h-10 rounded-full bg-secondary flex items-center justify-center hover:bg-primary/20 transition-colors"
                     aria-label={social.label}
                   >
@@ -88,7 +94,7 @@ export function ContactSection() {
                 ))}
               </div>
               <div className="flex flex-col gap-1" >
-                <div className="text-sm text-muted-foreground" style={{marginTop:30}}>Our Locations</div>
+                <div className="text-sm text-muted-foreground" style={{ marginTop: 30 }}>Our Locations</div>
                 <div className="flex flex-col">
                   <span className="font-medium text-foreground">
                     Udaipur, Rajasthan
