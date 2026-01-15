@@ -22,7 +22,7 @@ export function Header() {
       <img 
         src="/logo.png" 
         alt="Logo" 
-        className="h-17 w-22"
+        className="h-17 w-18"
       />
     </Link>
 
